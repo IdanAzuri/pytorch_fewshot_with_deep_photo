@@ -141,18 +141,18 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std, style
 
 
 def get_input_optimizer(input_img):
-	optimizer = optim.LBFGS([input_img.requires_grad_()])
+	optimizer = optim.Adam([input_img.requires_grad_()])
 	return optimizer
 
 
 def run_style_transfer(cnn, normalization_mean, normalization_std, style_layers, content_layers, style_img, content_img, input_img, style_masks, content_masks, device, reg=False,
-		num_steps=300, style_weight=100000, content_weight=1000, reg_weight=1000, ):
+                       num_steps=300, style_weight=100000, content_weight=1000, reg_weight=1000, ):
 	"""
 	Run the style transfer.
 	`reg_weight` is the photorealistic regularization hyperparameter
 	"""
 	model, style_losses, content_losses = get_style_model_and_losses(cnn, normalization_mean, normalization_std, style_layers, content_layers, style_img, content_img, style_masks,
-		content_masks, device, )
+	                                                                 content_masks, device, )
 	optimizer = get_input_optimizer(input_img)
 	
 	if reg:

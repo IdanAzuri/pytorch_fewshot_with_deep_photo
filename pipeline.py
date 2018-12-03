@@ -68,7 +68,7 @@ output = run_style_transfer(
     reg=False,
     style_weight=1e6,
     content_weight=1e4,
-    reg_weight=0,
+    reg_weight=1e-4,
     num_steps=500,
     )
 
@@ -92,9 +92,9 @@ output = run_style_transfer(
     content_masks,
     device,
     reg=True,
-    style_weight=1e6,
-    content_weight=1e4,
-    reg_weight=1e-4,
+    style_weight=1e2,
+    content_weight=5e0,
+    reg_weight=1e-8,
     num_steps=500,
     )
 
