@@ -1,0 +1,36 @@
+data:
+  path: "data/"
+
+model:
+  z_dim: 100     # Random noise dimension coming into generator, per output vector
+  real_dim: 784
+
+  g_h1: 256
+  g_h2: 512
+  g_h3: 1024
+
+  d_h1: 1024
+  d_h2: 512
+  d_h3: 256
+
+  dropout: 0.3
+
+train:
+  model_dir: "logs/gan"
+  batch_size: 64
+  train_steps: 50000
+
+  d_learning_rate: 0.0002  # 2e-4
+  g_learning_rate: 0.0002
+  optim_betas:
+    - 0.9
+    - 0.999
+
+  save_checkpoints_steps: 1000
+  verbose_step_count: 100
+
+predict:
+  batch_size: 64
+
+slack:
+  webhook_url: ""  # after training notify you using slack-webhook
