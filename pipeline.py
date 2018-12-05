@@ -52,28 +52,28 @@ content_layers = ["conv4_2"]
 
 # #### reg=False, num_steps=500
 
-# In[6]:
-output = run_style_transfer(
-    vgg,
-    vgg_normalization_mean,
-    vgg_normalization_std,
-    style_layers,
-    content_layers,
-    style_img,
-    content_img,
-    input_img,
-    style_masks,
-    content_masks,
-    device,
-    reg=False,
-    style_weight=1e6,
-    content_weight=1e4,
-    reg_weight=1e-4,
-    num_steps=500,
-    )
-
-
-plt_images(style_img, input_img, content_img)
+# # In[6]:
+# output = run_style_transfer(
+#     vgg,
+#     vgg_normalization_mean,
+#     vgg_normalization_std,
+#     style_layers,
+#     content_layers,
+#     style_img,
+#     content_img,
+#     input_img,
+#     style_masks,
+#     content_masks,
+#     device,
+#     reg=False,
+#     style_weight=1e6,
+#     content_weight=1e4,
+#     reg_weight=1e-4,
+#     num_steps=500,
+#     )
+#
+#
+# plt_images(style_img, input_img, content_img)
 
 # #### reg=True, num_steps=500
 
@@ -94,8 +94,8 @@ output = run_style_transfer(
     reg=True,
     style_weight=1e2,
     content_weight=5e0,
-    reg_weight=1e-8,
-    num_steps=500,
+    reg_weight=1e-4,
+    num_steps=2000,
     )
 
 plt_images(style_img, input_img, content_img)

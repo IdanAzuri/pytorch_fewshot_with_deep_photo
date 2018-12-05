@@ -156,15 +156,18 @@ def run_style_transfer(cnn, normalization_mean, normalization_std, style_layers,
 	optimizer = get_input_optimizer(input_img)
 	
 	if reg:
-		L = compute_laplacian(tensor_to_image(content_img))
+		# L = compute_laplacian(tensor_to_image(content_img))
+		L = compute_laplacian(tensor_to_image(content_img/ 255.))
 		
 		def regularization_grad(input_img):
 			"""
 			Photorealistic regularization
 			See Luan et al. for the details.
 			"""
-			im = tensor_to_image(input_img)
-			grad = L.dot(im.reshape(-1, 3))
+			im = input_img.reshape(-1, 3)
+			# im = tensor_to_image(input_img)
+			# grad = L.dot(im.reshape(-1, 3))
+			grad = L.mm(im.reshape(-1, 3))
 			loss = (grad * im.reshape(-1, 3)).sum()
 			return loss, 2. * grad.reshape(*im.shape)
 	
@@ -190,9 +193,11 @@ def run_style_transfer(cnn, normalization_mean, normalization_std, style_layers,
 			# Add photorealistic regularization
 			if reg:
 				reg_loss, reg_grad = regularization_grad(input_img)
-				reg_grad_tensor = image_to_tensor(reg_grad)
+				# reg_grad_tensor = image_to_tensor(reg_grad)
+				reg_grad_tensor = reg_grad
 				
-				input_img.grad += reg_weight * reg_grad_tensor
+				reshape = reg_grad_tensor.reshape([1,3,128, 128])
+				input_img.grad += reg_weight * reshape
 				
 				loss += reg_weight * reg_loss
 			
