@@ -1,9 +1,13 @@
 data:
   path: "data/"
+  mnist_path: "data/mnist"
+  svhn_path: "data/svhn"
+  image_size: 32
+  num_workers: 6
 
 model:
-  z_dim: 100     # Random noise dimension coming into generator, per output vector
-  real_dim: 784
+  z_dim: 100  # Random noise dimension coming into generator, per output vector
+  real_dim: 1024  #$image_size * image_size
 
   g_h1: 256
   g_h2: 512
@@ -14,16 +18,20 @@ model:
   d_h3: 256
 
   dropout: 0.3
+  use_augmentation: False
+  dataset: mnist
+
 
 train:
   model_dir: "logs/gan"
   batch_size: 64
   train_steps: 50000
+  shuffle: true
 
   d_learning_rate: 0.0002  # 2e-4
   g_learning_rate: 0.0002
   optim_betas:
-    - 0.9
+    - 0.5
     - 0.999
 
   save_checkpoints_steps: 1000

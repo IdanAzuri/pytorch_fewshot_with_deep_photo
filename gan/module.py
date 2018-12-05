@@ -9,11 +9,11 @@ class Generator(nn.Module):
         super().__init__()
         self.model = nn.Sequential(
             nn.Linear(input, h1),
-            nn.LeakyReLU(0.2, inplace=True),
+            nn.LeakyReLU(0.05, inplace=True),
             nn.Linear(h1, h2),
-            nn.LeakyReLU(0.2, inplace=True),
+            nn.LeakyReLU(0.05, inplace=True),
             nn.Linear(h2, h3),
-            nn.LeakyReLU(0.2, inplace=True),
+            nn.LeakyReLU(0.05, inplace=True),
             nn.Linear(h3, out),
             nn.Tanh()
         )
@@ -30,13 +30,13 @@ class Discriminator(nn.Module):
         super().__init__()
         self.model = nn.Sequential(
             nn.Linear(input, h1),
-            nn.LeakyReLU(0.2, inplace=True),
+            nn.LeakyReLU(0.05, inplace=True),
             nn.Dropout(dropout),
             nn.Linear(h1, h2),
-            nn.LeakyReLU(0.2, inplace=True),
+            nn.LeakyReLU(0.05, inplace=True),
             nn.Dropout(dropout),
             nn.Linear(h2, h3),
-            nn.LeakyReLU(0.2, inplace=True),
+            nn.LeakyReLU(0.05, inplace=True),
             nn.Dropout(dropout),
             nn.Linear(h3, out),
             nn.Sigmoid()

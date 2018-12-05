@@ -13,7 +13,8 @@ class Model():
 	def __init__(self, mode):
 		self.mode = mode
 	
-	def build_fn(self):
+	def model_builder(self):
+		#load model
 		gan = GAN()
 		
 		if self.mode == self.TRAIN_MODE:
@@ -22,9 +23,9 @@ class Model():
 			
 			return gan.train_fn(criterion, d_optimizer, g_optimizer)
 		elif self.mode == self.EVALUATE_MODE:
-			return gan.evaluate_fn()
+			return gan.evaluate_model()
 		elif self.mode == self.PREDICT_MODE:
-			return gan.predict_fn()
+			return gan.predict()
 		else:
 			raise ValueError(f"unknown mode: {self.mode}")
 	

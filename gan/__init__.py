@@ -127,10 +127,10 @@ class GAN:
         for tag, value in summary.items():
             self.tensorboard.scalar_summary(tag, value, step)
 
-    def evaluate_fn(self):
+    def evaluate_model(self):
         pass
 
-    def predict_fn(self):
+    def predict(self):
         # Load model
         self.prev_step_count, self.generator, _ = utils.load_saved_model(
                 self.G_PATH, self.generator, None)
@@ -141,6 +141,6 @@ class GAN:
         noise = Variable(torch.randn(batch_size, Config.model.z_dim))
         outputs = self.generator(noise, Config.model.z_dim)
 
-        fake_images = outputs.view(batch_size, 1, 28, 28)
+        fake_images = outputs.view(batch_size, 1, Config.data.image_size, Config.data.image_size)
         save_image(utils.denorm(fake_images.data), f"generate_images-{self.prev_step_count}.png")
         print("finished generate images..!")
