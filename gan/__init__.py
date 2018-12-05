@@ -77,14 +77,16 @@ class GAN:
 
             # Step Verbose & Tensorboard Summary
             if step_count % Config.train.verbose_step_count == 0:
-                loss = d_loss.data[0] + g_loss.data[0]
+                g_loss_data = g_loss.data[0].item()
+                d_loss_data = d_loss.data[0].item()
+                loss = d_loss_data + g_loss_data
                 self._add_summary(step_count, {
                     "Loss": loss,
-                    "D_Loss": d_loss.data[0],
-                    "G_Loss": g_loss.data[0]
+                    "D_Loss": d_loss_data,
+                    "G_Loss": g_loss_data
                 })
 
-                print(f"Step {step_count} - Loss: {loss} (D: {d_loss.data[0]}, G: {g_loss.data[0]})")
+                print(f"Step {step_count} - Loss: {loss} (D: { d_loss_data }, G: { g_loss_data })")
 
             # Save model parameters
             if step_count % Config.train.save_checkpoints_steps == 0:
