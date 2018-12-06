@@ -69,7 +69,7 @@ class AugmentedStyleLoss(nn.Module):
 	
 	def forward(self, input):
 		gram_matrices = [gram_matrix(input * mask.detach().to(device)) for mask in self.input_masks]
-		self.loss = sum(F.mse_loss(gram, target) for gram, target in zip(gram_matrices, self.targets))
+		self.loss = sum(F.mse_loss(gram, target) for gram, target in zip(gram_matrices, self.targets.to(device)))
 		return input
 
 
