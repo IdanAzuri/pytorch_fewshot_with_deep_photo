@@ -7,7 +7,7 @@ import torch.optim as optim
 
 from closed_form_matting import compute_laplacian
 from image_preprocessing import tensor_to_image, image_to_tensor
-
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class Normalization(nn.Module):
 	def __init__(self, mean, std):
@@ -64,11 +64,11 @@ class AugmentedStyleLoss(nn.Module):
 	
 	def __init__(self, target_feature, target_masks, input_masks):
 		super(AugmentedStyleLoss, self).__init__()
-		self.input_masks = [mask.to(device) for mask in input_masks]
+		self.input_masks = [mask.detach() for mask in input_masks]
 		self.targets = [gram_matrix(target_feature * mask).detach() for mask in target_masks]
 	
 	def forward(self, input):
-		gram_matrices = [gram_matrix(input * mask.detach()) for mask in self.input_masks]
+		gram_matrices = [gram_matrix(input * mask.detach().to(device)) for mask in self.input_masks]
 		self.loss = sum(F.mse_loss(gram, target) for gram, target in zip(gram_matrices, self.targets))
 		return input
 
