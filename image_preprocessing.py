@@ -16,7 +16,7 @@ def tensor_to_image(x):
         (B, C, W, H) -> (B, W, H, C) 
 
     """
-    return x.detach().numpy().transpose(0, 2, 3, 1).squeeze().clip(0, 1)
+    return x.cpu().detach().numpy().transpose(0, 2, 3, 1).squeeze().clip(0, 1)
 
 
 def image_to_tensor(x):
