@@ -64,7 +64,7 @@ class AugmentedStyleLoss(nn.Module):
 	
 	def __init__(self, target_feature, target_masks, input_masks):
 		super(AugmentedStyleLoss, self).__init__()
-		self.input_masks = [mask.detach() for mask in input_masks]
+		self.input_masks = [mask.to(device) for mask in input_masks]
 		self.targets = [gram_matrix(target_feature * mask).detach() for mask in target_masks]
 	
 	def forward(self, input):
